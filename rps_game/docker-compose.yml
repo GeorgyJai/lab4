@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # Consul service discovery
+  consul:
+    image: hashicorp/consul:latest
+    container_name: consul_rps
+    ports:
+      - "8500:8500"
+    command: "agent -dev -client=0.0.0.0 -ui"
+    networks:
+      - rps_network
+
+  # PostgreSQL database
+  rps-db:
+    image: postgres:latest
+    container_name: rps-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: rps_game
+    ports:
+      - "5434:5432"
+    networks:
+      - rps_network
+
+networks:
+  rps_network:
+    driver: bridge

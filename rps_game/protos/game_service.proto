@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package rps;
+
+service GameService {
+    rpc CreateGame (CreateRequest) returns (GameResponse);
+    rpc MakeMove (MoveRequest) returns (GameResponse);
+    rpc GetState (StateRequest) returns (GameResponse);
+    rpc CheckSession (CheckRequest) returns (CheckResponse);
+    rpc ResetGame (StateRequest) returns (GameResponse);
+    rpc ExitGame (ExitRequest) returns (ExitResponse);
+}
+
+message CheckRequest {
+    string player_id = 1;
+}
+
+message CheckResponse {
+    string game_id = 1;
+    bool exists = 2;
+}
+
+message CreateRequest {
+    string player_id = 1;  // Format: "Nickname|RoomID"
+    bool is_join_only = 2;  // If true, server won't create new room
+}
+
+message StateRequest {
+    string game_id = 1;
+    string player_id = 2;
+}
+
+message MoveRequest {
+    string game_id = 1;
+    string player_id = 2;
+    string choice = 3;  // "rock", "paper", or "scissors"
+}
+
+message ExitRequest {
+    string game_id = 1;
+    string player_id = 2;
+}
+
+message ExitResponse {
+    bool success = 1;
+}
+
+message GameResponse {
+    string game_id = 1;
+    string player1 = 2;
+    string player2 = 3;
+    string player1_choice = 4;  // "rock", "paper", "scissors", or "waiting"
+    string player2_choice = 5;
+    string status = 6;  // "waiting", "ready", "player1_won", "player2_won", "draw"
+    string current_player_id = 7;
+    string error = 8;
+    int32 player1_score = 9;
+    int32 player2_score = 10;
+    string round_result = 11;  // Result message for the round
+}

@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package rps;
+
+service Orm {
+    rpc CheckSession (CheckSessionRequest) returns (CheckSessionResponse);
+    rpc ExitGame (ExitGameRequest) returns (ExitGameResponse);
+    rpc Load (LoadRequest) returns (LoadResponse);
+    rpc Save (SaveRequest) returns (SaveResponse);
+}
+
+message CheckSessionRequest {
+    string player_id = 1;
+}
+
+message CheckSessionResponse {
+    string game_id = 1;
+    bool exists = 2;
+}
+
+message ExitGameRequest {
+    string game_id = 1;
+    string player_id = 2;
+}
+
+message ExitGameResponse {
+    bool success = 1;
+}
+
+message LoadRequest {
+    string game_id = 1;
+}
+
+message LoadResponse {
+    bool success = 1;
+    Game game = 2;
+}
+
+message SaveRequest {
+    Game game = 1;
+    string game_id = 2;
+}
+
+message SaveResponse {
+    bool success = 1;
+}
+
+message Game {
+    string player1 = 1;
+    string player2 = 2;
+    string player1_choice = 3;
+    string player2_choice = 4;
+    string status = 5;
+    int32 player1_score = 6;
+    int32 player2_score = 7;
+}
