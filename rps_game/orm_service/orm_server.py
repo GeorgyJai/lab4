@@ -235,7 +235,7 @@ def serve():
         config['consul']['port'] = args.consul_port
     
     # Initialize database
-    initialize()
+    #initialize()
     
     # Get local IP and port
     host_ip = get_local_ip()
