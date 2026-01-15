@@ -1,0 +1,43 @@
+ЛАБ2 (где сокеты и очереди): 
+mvn clean package
+java -jar target/distributed-app-1.0.0.jar server
+java -jar target/distributed-app-1.0.0.jar client
+
+ЛАБ3:
+открыть докер, запустить постгрю
+подготовить команды для pgAdmin: в lab2_normalized, company, query tool
+cd server
+mvn clean package
+копировать localhost.cer из папки сервера в папку клиента (предыд файл с одноименным названием в папке клиента удалить)
+java -jar target/distributed-app-1.0.0.jar
+открыть новый терминал:
+cd client    
+dotnet run
+
+ЛАБ4:
+хост:
+открыть докер, запустить rps_game в нём
+cd rps_game
+python -m orm_service.orm_server
+http://localhost:8500/ui/dc1/services, Key / Value
+новый терминал:
+cd rps_game
+python -m game_server.game_server
+http://localhost:8500/ui/dc1/services, Key / Value
+вм1:
+cd rps_game
+python -m game_server.game_server
+новый терминал
+cd rps_game
+python -m client.rps_client
+вм2:
+cd rps_game
+python -m orm_service.orm_server
+новый терминал
+cd rps_game
+python -m client.rps_client
+
+затем убийства лидеров
+становление лидером (см. терминал)
+показать консул
+показать игру
